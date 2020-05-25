@@ -1,0 +1,27 @@
+<DirectoryNotFoundException>
+  <Message PropertyType="String" InstanceType="String">找不到路徑 'D:\工作\中正預校\1campus_desktop\options\config.xml' 的一部分。</Message>
+  <Data PropertyType="IDictionary" InstanceType="ListDictionaryInternal">System.Collections.ListDictionaryInternal</Data>
+  <InnerException PropertyType="Exception" />
+  <TargetSite PropertyType="MethodBase" InstanceType="RuntimeMethodInfo">Void WinIOError(Int32, System.String)</TargetSite>
+  <StackTrace PropertyType="String" InstanceType="String">   於 System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   於 System.IO.Directory.Delete(String fullPath, String userPath, Boolean recursive, Boolean checkHost)
+   於 System.IO.DirectoryInfo.Delete(Boolean recursive)
+   於 Script.DeleteCommand.Execute()
+   於 Script.Program.Main(String[] args)</StackTrace>
+  <HelpLink PropertyType="String" />
+  <Source PropertyType="String" InstanceType="String">mscorlib</Source>
+  <HResult PropertyType="Int32" InstanceType="Int32">-2147024893</HResult>
+</DirectoryNotFoundException>
+<DirectoryNotFoundException>
+  <Message PropertyType="String" InstanceType="String">找不到路徑 'D:\工作\中正預校\1campus_desktop\options\diagarguments.xml' 的一部分。</Message>
+  <Data PropertyType="IDictionary" InstanceType="ListDictionaryInternal">System.Collections.ListDictionaryInternal</Data>
+  <InnerException PropertyType="Exception" />
+  <TargetSite PropertyType="MethodBase" InstanceType="RuntimeMethodInfo">Void WinIOError(Int32, System.String)</TargetSite>
+  <StackTrace PropertyType="String" InstanceType="String">   於 System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   於 System.IO.Directory.Delete(String fullPath, String userPath, Boolean recursive, Boolean checkHost)
+   於 System.IO.DirectoryInfo.Delete(Boolean recursive)
+   於 Script.DeleteCommand.Execute()
+   於 Script.Program.Main(String[] args)</StackTrace>
+  <HelpLink PropertyType="String" />
+  <Source PropertyType="String" InstanceType="String">mscorlib</Source>
+  <HResult PropertyType="Int32" InstanceTy
