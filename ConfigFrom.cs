@@ -23,7 +23,15 @@ namespace StdScoreViewerConfig
 
         public int dtstatue ;
         QueryHelper helper = new QueryHelper();
+
+        /// <summary>
+        /// 顯示算術平均
+        /// </summary>
         static bool arithmeticAveSta;
+
+        /// <summary>
+        /// 顯示加權平均
+        /// </summary>
         static bool weightedAveSta;
 
 
@@ -35,6 +43,10 @@ namespace StdScoreViewerConfig
         //static bool enddataSet;
         static string viewOptionSet;
 
+        /// <summary>
+        /// 不顯示排名 (true:不顯示，false:顯示)
+        /// 2022-11-13 Cynthia 因畫面調整，將原本不顯示排名的選項改為獨立的"顯示排名"，所以bool邏輯是反著
+        /// </summary>
         static bool rankViewNull;
 
         /// <summary>
@@ -121,8 +133,9 @@ namespace StdScoreViewerConfig
                 if (table.Rows.Count == 0)
                 {
                     this.ckArithmeticAvg.Checked = false;
-                    this.ckWeightedAvg.Checked = false;
-                    this.ckNull.Checked = false;
+                    this.ckWeightedAvg.Checked = true;
+                    //this.ckNull.Checked = false;
+                    this.chkRank.Checked = false;
                     this.ckEndTime.Checked = true;
                     dtstatue = 0;
                 }
@@ -130,7 +143,8 @@ namespace StdScoreViewerConfig
                 {
                     this.ckArithmeticAvg.Checked = arithmeticAveSta;
                     this.ckWeightedAvg.Checked = weightedAveSta;
-                    this.ckNull.Checked = rankViewNull;
+                    //this.ckNull.Checked = rankViewNull;
+                    this.chkRank.Checked = !rankViewNull;  //如果 XML 均不顯示排名為false，則畫面上"顯示排名" 要勾選
 
                     ///讀取XML中所存，顯示UI何者該check
                     if (viewOptionSet == "True")
@@ -170,7 +184,8 @@ namespace StdScoreViewerConfig
             //轉換成Xml格式
             var aa = this.ckArithmeticAvg.Checked.ToString();
             var wa = this.ckWeightedAvg.Checked.ToString();
-            var nn = this.ckNull.Checked.ToString();
+            //var nn = this.ckNull.Checked.ToString();
+            var nn = (!this.chkRank.Checked).ToString(); //如果 XML 均不顯示排名為false，則畫面上"顯示排名" 要勾選
             //var ed = this.ckEndTime.Checked.ToString();
 
             string ed;
@@ -201,15 +216,15 @@ namespace StdScoreViewerConfig
 
             List<configItem> config = new List<configItem>()
 	            {
-		            new configItem() { 算數平均及排名 = aa, 加權平均及排名 = wa, 均不顯示排名 = nn, 成績開放查詢設定 = ed },
+		            new configItem() { 算術平均分數 = aa, 加權平均分數 = wa, 不顯示排名 = nn, 成績開放查詢設定 = ed },
 
 	            };
 	            var xmlTree = new XElement("Configurations",
 	             from configItem in config
                  select new XElement("Configuration", 
-				            new XElement("算數平均及排名", configItem.算數平均及排名),
-				            new XElement("加權平均及排名", configItem.加權平均及排名),
-                            new XElement("均不顯示排名", configItem.均不顯示排名),
+				            new XElement("算數平均及排名", configItem.算術平均分數),
+				            new XElement("加權平均及排名", configItem.加權平均分數),
+                            new XElement("均不顯示排名", configItem.不顯示排名), // True: 不顯示排名，false:顯示排名
                             new XElement("成績開放查詢設定", configItem.成績開放查詢設定)
                             )
 
@@ -285,8 +300,7 @@ RETURNING *";
                     this.dataGridViewX1.CurrentCell.ErrorText = "";
                 }
             }
-
-
         }
+
     }
 }

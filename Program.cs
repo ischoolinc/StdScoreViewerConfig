@@ -18,21 +18,12 @@ namespace StdScoreViewerConfig
         {
             #region 評量成績查詢設定
             {
-
-                RoleAclSource.Instance["教務作業"]["功能按鈕"].Add(new RibbonFeature("AED2F99E-3947-4A07-BC54-019F63783A40", "評量成績查詢設定"));
-                MotherForm.RibbonBarItems["教務作業", "基本設定"]["設定"]["評量成績查詢設定"].Enable = UserAcl.Current["AED2F99E-3947-4A07-BC54-019F63783A40"].Executable;
-                MotherForm.RibbonBarItems["教務作業", "基本設定"]["設定"]["評量成績查詢設定"].Click += delegate
+                RoleAclSource.Instance["教務作業"]["功能按鈕"].Add(new RibbonFeature("AED2F99E-3947-4A07-BC54-019F63783A40", "學生家長評量成績查詢設定"));
+                MotherForm.RibbonBarItems["教務作業", "基本設定"]["設定"]["學生家長評量成績查詢設定"].Enable = UserAcl.Current["AED2F99E-3947-4A07-BC54-019F63783A40"].Executable;
+                MotherForm.RibbonBarItems["教務作業", "基本設定"]["設定"]["學生家長評量成績查詢設定"].Click += delegate
                 {
                     ConfigFrom configForm = new ConfigFrom();
                     configForm.ShowDialog();
-                    //try
-                    //{
-                    //    ConfigFrom configForm = new ConfigFrom();
-                    //    configForm.ShowDialog();
-                    //}
-                    //catch (Exception ex){
-                    //    Console.WriteLine(ex.Message);
-                    //}
                 };
             }
             #endregion
