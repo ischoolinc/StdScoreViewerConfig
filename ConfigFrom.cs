@@ -69,7 +69,7 @@ namespace StdScoreViewerConfig
             InitializeComponent();
 
             List<int> cols = new List<int>() { 2 };
-            Campus.Windows.DataGridViewImeDecorator dec = new Campus.Windows.DataGridViewImeDecorator(this.dataGridViewX1, cols);
+            Campus.Windows.DataGridViewImeDecorator dec = new Campus.Windows.DataGridViewImeDecorator(this.dgv, cols);
         }
 
         private void ConfigFrom_Load(object sender, EventArgs e)
@@ -78,11 +78,11 @@ namespace StdScoreViewerConfig
             foreach (ExamRecord exam in _exams)
             {
                 DataGridViewRow row = new DataGridViewRow();
-                row.CreateCells(dataGridViewX1);
+                row.CreateCells(dgv);
                 row.Cells[0].Value = exam.ID;
                 row.Cells[1].Value = exam.Name;
 
-                dataGridViewX1.Rows.Add(row);
+                dgv.Rows.Add(row);
             }
 
             // 2. 從資料庫讀取資料
@@ -119,7 +119,7 @@ namespace StdScoreViewerConfig
                     {
                         examViewTimeMapping.Add(id, viewtime);
                     }
-                    foreach (DataGridViewRow item in dataGridViewX1.Rows)
+                    foreach (DataGridViewRow item in dgv.Rows)
                     {
                         string key = item.Cells[0].Value.ToString();
                         if (examViewTimeMapping.ContainsKey(key))
@@ -148,11 +148,26 @@ namespace StdScoreViewerConfig
 
                     ///讀取XML中所存，顯示UI何者該check
                     if (viewOptionSet == "True")
+                    {
                         this.ckEndTime.Checked = true;
+                        this.dgv.Enabled = false;
+                        dgv.DefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
+                        dgv.DefaultCellStyle.ForeColor = Color.FromArgb(171, 171, 171);
+                    }
                     else if (viewOptionSet == "False")
+                    {
                         this.ckInstant.Checked = true;
+                        this.dgv.Enabled = false;
+                        dgv.DefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
+                        dgv.DefaultCellStyle.ForeColor = Color.FromArgb(171, 171, 171);
+                    }
                     else
+                    {
                         this.ckViewTime.Checked = true;
+                        this.dgv.Enabled = true;
+                        dgv.DefaultCellStyle.BackColor = Color.White;
+                        dgv.DefaultCellStyle.ForeColor = Color.Black;
+                    }
 
                     dtstatue = 1;
                 }
@@ -163,11 +178,11 @@ namespace StdScoreViewerConfig
         private void BtnSave_Click(object sender, EventArgs e)
         {
             //Cyn 2021-9 檢查dataview有無錯誤資料
-            foreach (DataGridViewRow dr in dataGridViewX1.Rows)
+            foreach (DataGridViewRow dr in dgv.Rows)
             {
                 if (dr.ErrorText != "")
                 {
-                    MsgBox.Show("資料有誤，請修改。");
+                    MsgBox.Show("查詢起始時間資料有誤，請修改。");
                     return;
                 }
 
@@ -175,7 +190,7 @@ namespace StdScoreViewerConfig
                 {
                     if (cell.ErrorText != "")
                     {
-                        MsgBox.Show("資料有誤，請修改。");
+                        MsgBox.Show("查詢起始時間資料有誤，請修改。");
                         return;
                     }
                 }
@@ -199,7 +214,7 @@ namespace StdScoreViewerConfig
             ///將dgv上的評量查詢時間，拼湊成xml格式
             List<string> xmlList = new List<string>();
 
-            foreach (DataGridViewRow rows in dataGridViewX1.Rows)
+            foreach (DataGridViewRow rows in dgv.Rows)
             {
                 string id = rows.Cells[0].Value.ToString();
                 string viewtime;
@@ -278,7 +293,7 @@ RETURNING *";
         /// <param name="e"></param>
         private void dataGridViewX1_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            var startTime = dataGridViewX1.Rows[e.RowIndex].Cells[2];
+            var startTime = dgv.Rows[e.RowIndex].Cells[2];
 
             DateTime dateTime;
             if (e.ColumnIndex == 2) //2 只能輸入時間
@@ -286,21 +301,36 @@ RETURNING *";
                 if (!string.IsNullOrWhiteSpace(startTime.EditedFormattedValue.ToString()))
                 {
                     if (!DateTime.TryParse(startTime.EditedFormattedValue.ToString(), out dateTime))
-                        dataGridViewX1.CurrentCell.ErrorText = "請輸入正確的時間格式，例如：2021/10/10 19:20";
+                        dgv.CurrentCell.ErrorText = "請輸入正確的時間格式，例如：2021/10/10 19:20";
                     else
                     {
                         DateTime? timeParse = DateTimeHelper.ParseGregorian(startTime.Value.ToString(), PaddingMethod.First);
                         startTime.Value = timeParse.Value.ToString(DateTimeFormat);
 
-                        dataGridViewX1.CurrentCell.ErrorText = "";
+                        dgv.CurrentCell.ErrorText = "";
                     }
                 }
                 else
                 {
-                    this.dataGridViewX1.CurrentCell.ErrorText = "";
+                    this.dgv.CurrentCell.ErrorText = "";
                 }
             }
         }
 
+        private void ckViewTime_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ckViewTime.Checked)
+            {
+                dgv.Enabled = true;
+                dgv.DefaultCellStyle.BackColor = Color.White;
+                dgv.DefaultCellStyle.ForeColor = Color.Black;
+            }
+            else
+            {
+                dgv.Enabled = false;
+                dgv.DefaultCellStyle.BackColor = Color.FromArgb(240,240,240);
+                dgv.DefaultCellStyle.ForeColor = Color.FromArgb(171, 171, 171);
+            }
+        }
     }
 }

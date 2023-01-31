@@ -126,4 +126,12 @@
   <metadata name="Column2.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <data name="txtDesc.Text" xml:space="preserve">
+    <value>說明：
+1. 本設定於「成績輸入」、「成績輸入截止」或「查詢起始時間」等三個時間點前，將限制查詢該學年度學期之評量成績但前學年學期則不受此限。
+  例如：目前系統為110學年度第1學期時，查詢109學年度第2學期的之評量成績將不受限制。
+2. 其查詢時機應用於學生及家長使用WEB與APP查詢評量成績時
+3. 在「查詢起始時間」對應方格中之輸入「月份/日期」，將自動換轉時間格式為「西元年/月份/日期 00:00」，並可再調整輸入詳細時間。
+4. 在「查詢起始時間」對應方格中而未輸入起始時間，則代表於該學年度學期無法查詢該項定期評量。</value>
+  </data>
 </root>
