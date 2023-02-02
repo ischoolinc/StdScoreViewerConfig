@@ -148,25 +148,27 @@ namespace StdScoreViewerConfig
 
                     ///讀取XML中所存，顯示UI何者該check
                     if (viewOptionSet == "True")
-                    {
                         this.ckEndTime.Checked = true;
-                        this.dgv.Enabled = false;
-                        dgv.DefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
-                        dgv.DefaultCellStyle.ForeColor = Color.FromArgb(171, 171, 171);
-                    }
                     else if (viewOptionSet == "False")
-                    {
                         this.ckInstant.Checked = true;
-                        this.dgv.Enabled = false;
-                        dgv.DefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
-                        dgv.DefaultCellStyle.ForeColor = Color.FromArgb(171, 171, 171);
-                    }
                     else
-                    {
                         this.ckViewTime.Checked = true;
+
+
+                    // 控制dgv UI
+                    if (viewOptionSet.ToLower() == "viewtime")
+                    {
                         this.dgv.Enabled = true;
                         dgv.DefaultCellStyle.BackColor = Color.White;
                         dgv.DefaultCellStyle.ForeColor = Color.Black;
+                        dgv.DefaultCellStyle.SelectionForeColor = Color.Black;
+                    }
+                    else
+                    {
+                        this.dgv.Enabled = false;
+                        dgv.DefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
+                        dgv.DefaultCellStyle.ForeColor = Color.FromArgb(171, 171, 171);
+                        dgv.DefaultCellStyle.SelectionForeColor = Color.FromArgb(171, 171, 171);
                     }
 
                     dtstatue = 1;
@@ -324,12 +326,14 @@ RETURNING *";
                 dgv.Enabled = true;
                 dgv.DefaultCellStyle.BackColor = Color.White;
                 dgv.DefaultCellStyle.ForeColor = Color.Black;
+                dgv.DefaultCellStyle.SelectionForeColor = Color.Black;
             }
             else
             {
                 dgv.Enabled = false;
                 dgv.DefaultCellStyle.BackColor = Color.FromArgb(240,240,240);
                 dgv.DefaultCellStyle.ForeColor = Color.FromArgb(171, 171, 171);
+                dgv.DefaultCellStyle.SelectionForeColor = Color.FromArgb(171, 171, 171);
             }
         }
     }
